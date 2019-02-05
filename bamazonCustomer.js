@@ -139,7 +139,7 @@ function customerPrompt() {
         name: "prodQty",
         message:"\nEnter the quantity that you would like to buy? Enter 0 to start again or -1 to exit.",
         validate: (value)=> {
-            var pass = value.match(/^\d+$/);
+            var pass = value.match(/^-?\d*\.?\d+$/);
             if (pass) {
               return true;
             } else {
@@ -163,7 +163,8 @@ function customerPrompt() {
 //Welcome splash
 console.log('\n***********************************************');
 console.log('*                                             *');
-console.log('*            Welcome to BAMAZON !!!           *');
+console.log('*            Welcome to BAMAZON               *');
+console.log('*          You are a valued customer !        *');
 console.log('*                                             *');
 console.log('***********************************************');
 
