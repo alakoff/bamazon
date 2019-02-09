@@ -54,19 +54,31 @@ function buyProd(prodId,prodQty) {
                 main();
 
             } else {
+
+                
+                if (prodQty > 0) {
+
                 //Complete the transaction
                 console.log('\nCompleting your transaction, please wait one moment ...');
 
-                //Show total purchase
-                var totalPurchase = prodQty * stockPrice;
-                console.log('\n *** Your total purchase was $',totalPurchase, '***');
+                  //Show total purchase
+                  var totalPurchase = prodQty * stockPrice;
+                  console.log('\n *** Your total purchase was $',totalPurchase, '***');
 
-                //Update item quantity
-                updateProd(prodId,prodQty,stockQty);
+                  //Update item quantity
+                  updateProd(prodId,prodQty,stockQty);
 
-                //Back to main page
-                main();
+                  //Back to main page
+                  main();
+
+                } else {
+                  
+                  //Purchase quantity was not greater than zero
+                  console.log('\n*** Purchase quantity must be greater than zero! ***');
+                  main();
+                }
             }
+
         } else {
 
             //General catch all message, for no error but response is not greater than 0
