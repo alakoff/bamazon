@@ -162,9 +162,71 @@ function addProdQty(){
 
 //Function to add a new product
 function addNewProd(){
-    console.log('Under Development');
-    main();
-}
+    
+    //Prompt for all needed product information
+    inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "product_name",
+        message: "\nEnter new product name ?",
+      },
+      {
+        type: "input",
+        name: "department_name",
+        message: "\nEnter new product department ?",
+      },
+      {
+        type: "input",
+        name: "price",
+        message:"\nEnter the new product price ?",
+        validate: (value)=> {
+            var pass = value.match(/^-?\d*\.?\d+$/);
+            if (pass) {
+              return true;
+            } else {
+                return 'Please enter a number';
+            }    
+          }
+      },
+      {
+        type: "input",
+        name: "stock_quantity",
+        message:"\nEnter the new product stock_quantity ?",
+        validate: (value)=> {
+            var pass = value.match(/^-?\d*\.?\d+$/);
+            if (pass) {
+              return true;
+            } else {
+                return 'Please enter a number';
+            }    
+          }
+       
+      }]).then(function(res){
+        
+            //Assign values from responses to variables used for updating table
+            var newProdName = res.product_name;
+            var newProdDept = res.department_name;
+            var newProdPrice = res.price;
+            var newProdQty = res.stock_quantity;
+
+            //Create sql statement to updat the products table
+            var sql = 'insert into products set ?';
+
+            conn.query(sql,[{
+                product_name: newProdName,
+                department_name: newProdDept,
+                price: newProdPrice,
+                stock_quantity: newProdQty
+            }],(err,res)=>{
+                if (err) throw err;
+                console.log('New product added successfully!')
+                main();
+            })
+        
+    })
+
+}  
 
 
 //Function to display menu to the manager
@@ -180,8 +242,8 @@ function main(){
         {
         type: "list",
         name: "mgrAction",
-        message: "\nWhat manager action would you like to do perform?",
-        choices: ["View Products for Sale", "View Low Qty Products", "Add to Inventory","Add New Product"]
+        message: "\nWhat manager action would you like to perform?",
+        choices: ["View Products for Sale", "View Low Qty Products", "Add to Inventory","Add New Product","Exit"]
         }
     ])
     .then(function(res){
@@ -193,7 +255,10 @@ function main(){
             addProdQty();
         } else if (res.mgrAction === 'Add New Product') {
             addNewProd();
-        } else {
+        } else if (res.mgrAction === 'Exit') {
+            conn.end();
+        }
+        else {
         //Show error message
         console.log("*** Sorry, an invalid selection was made!");
         main();
