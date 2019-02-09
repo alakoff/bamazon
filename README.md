@@ -100,6 +100,16 @@ Let's purchase all the remaining quantity of item id 14.
 
 Note that item id 14 is no longer displayed for an available product.
 
+---
+#### Purchase Quantity Greater Than Zero
+---
+A number must be entered for the quantity to purchase, only numbers are accepted.
+
+![Customer purchase of item id 1](./images/cust6.PNG)
+
+The application will display a message that the purchse quantity must be greater than zero.
+
+![Customer purchase of item id 1](./images/cust7.PNG)
 
 ---
 ### Manager Module
