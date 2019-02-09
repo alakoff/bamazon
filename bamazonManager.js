@@ -120,9 +120,10 @@ function addProdQty(){
       {
         type: "input",
         name: "prodQty",
-        message:"\nEnter the quantity that you would like to add? Enter 0 to start again or -1 to exit.",
+        message:"\nEnter the quantity that you would like to add? Enter 0 to start again.",
         validate: (value)=> {
-            var pass = value.match(/^-?\d*\.?\d+$/);
+            // var pass = value.match(/^-?\d*\.?\d+$/);
+            var pass = value.match(/^\d+$/);
             if (pass) {
               return true;
             } else {
@@ -132,12 +133,10 @@ function addProdQty(){
       }])
     .then(function(res) {
 
-      // based on their answers, restart if quatity is 0, exit if quantity is =1, or update quantity
-      if (res.prodQty === '0') {
-        main();
-        } else if (res.prodQty === '-1') {
-          console.log("Ok, come back again soon!");
-          closeApp();
+      // based on their answers, restart if quatity is less than 1, or update quantity
+      if (res.prodQty <1) {
+          console.log('\n*** No quantity added ***')
+            main();
         } else {
             //Update the selected prod Id current quantity with the quantity entered
             //Get current quantity for the selected product id
